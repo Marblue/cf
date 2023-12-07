@@ -10,15 +10,13 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build-go-binary:
+  release-linux-amd64:
+    name: release linux/amd64
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        goos: [linux, windows, darwin] # 需要打包的系统
-        goarch: [amd64, arm64] # 需要打包的架构
     steps:
-      - uses: actions/checkout@v3
-        with:
-          goos: ${{ matrix.goos }}
-          goarch: ${{ matrix.goarch }}
-          
+    - uses: actions/checkout@v3
+    - uses: wangyoucao577/go-release-action@v1
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        goos: linux
+        goarch: amd64
